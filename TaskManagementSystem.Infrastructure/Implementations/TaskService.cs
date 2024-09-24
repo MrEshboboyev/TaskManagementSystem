@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using System.Threading.Tasks;
 using TaskManagementSystem.Application.Common.Interfaces;
 using TaskManagementSystem.Application.DTOs;
 using TaskManagementSystem.Application.Services.Interfaces;

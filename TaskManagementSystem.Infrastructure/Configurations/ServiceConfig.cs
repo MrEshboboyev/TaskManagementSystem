@@ -16,6 +16,10 @@ namespace TaskManagementSystem.Infrastructure.Configurations
             services.AddScoped<IDbInitializer, DbInitializer>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<ICommentService, CommentService>();
+            services.AddScoped<INotificationService, NotificationService>();
+            services.AddScoped<IProjectService, ProjectService>();
+            services.AddScoped<ITaskService, TaskService>();
 
             return services;
         }
