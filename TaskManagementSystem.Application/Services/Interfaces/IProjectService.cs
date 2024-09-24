@@ -17,12 +17,12 @@ public interface IProjectService
     Task<ResponseDTO<IEnumerable<ProjectDTO>>> GetAllProjectsAsync(ProjectFilterDTO filterDto = null);
 
     // Get tasks for a project
-    Task<ResponseDTO<IEnumerable<ProjectDTO>>> GetProjectTasksAsync(int projectId);
+    Task<ResponseDTO<IEnumerable<ProjectTaskDTO>>> GetProjectTasksAsync(int projectId);
 
     // Assign a user as the manager of a project
-    Task AssignProjectManagerAsync(int projectId, string userId);
+    Task<ResponseDTO<bool>> AssignProjectManagerAsync(int projectId, string userId);
 
     // Delete a project
-    Task DeleteProjectAsync(int projectId);
+    Task<ResponseDTO<bool>> DeleteProjectAsync(ProjectDeleteDTO projectDeleteDTO);
 }
 

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using TaskManagementSystem.Application.DTOs;
 using TaskManagementSystem.Domain.Entities;
+using TaskManagementSystem.Domain.Enums;
 
 namespace TaskManagementSystem.Application.Mappings
 {
@@ -29,6 +30,24 @@ namespace TaskManagementSystem.Application.Mappings
             // NotificationCreateDTO -> Notification
             CreateMap<NotificationCreateDTO, Notification>();
 
+            #endregion
+
+            #region Project
+
+            // Project -> ProjectDTO
+            CreateMap<Project, ProjectDTO>()
+                .ForMember(dest => dest.ManagerName, opt => opt.MapFrom(src => src.Manager.FullName));
+
+            // TaskItem -> ProjectTaskDTO
+            CreateMap<TaskItem, ProjectTaskDTO>()
+                .ForMember(dest => dest.TaskId, opt => opt.MapFrom(src => src.Id));
+
+            // ProjectCreateDTO -> Project
+            CreateMap<ProjectCreateDTO, Project>()
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => TaskStatusEnum.Todo));
+
+            // ProjectUpdateDTO -> Project
+            CreateMap<ProjectUpdateDTO, Project>();
             #endregion
         }
     }
