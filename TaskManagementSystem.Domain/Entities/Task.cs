@@ -18,5 +18,6 @@ public class Task
     // Navigation Properties
     public ApplicationUser AssignedUser { get;  set; }                // Reference to the assigned user
     public Project Project { get;  set; }                  // Reference to the associated project
+    public List<Comment> Comments { get; set; } 
 }
 

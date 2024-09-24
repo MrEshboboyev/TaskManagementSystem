@@ -10,7 +10,7 @@ public class Project
     public DateTime StartDate { get;  set; }                // Date when the project started
     public DateTime EndDate { get;  set; }                  // Expected end date for the project
     public ProjectStatus Status { get;  set; }              // Enum: Current status of the project
-    public string ManagerId { get;  set; }                 // User responsible for managing the project
+    public string ManagerUserId { get;  set; }                 // User responsible for managing the project
 
     // Navigation Properties
     public ApplicationUser Manager { get;  set; }                      // Reference to the project manager
