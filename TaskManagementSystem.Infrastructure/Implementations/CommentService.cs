@@ -85,8 +85,7 @@ public class CommentService(IUnitOfWork unitOfWork, IMapper mapper) : ICommentSe
         {
             // getting this comment 
             var commentFromDB = await _unitOfWork.Comment.GetAsync(
-                filter: c => c.Id.Equals(commentId) &&
-                c.TaskId.Equals(commentUpdateDTO.TaskId) && 
+                filter: c => c.Id.Equals(commentId) && 
                 c.UserId.Equals(commentUpdateDTO.UserId),
                 includeProperties: "User,Task"
                 ) ?? throw new Exception("Comment not found!");
