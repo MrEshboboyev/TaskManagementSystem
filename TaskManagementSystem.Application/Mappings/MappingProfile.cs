@@ -23,6 +23,13 @@ namespace TaskManagementSystem.Application.Mappings
             CreateMap<CommentUpdateDTO, Comment>();
 
             #endregion
+
+            #region Notification
+
+            // NotificationCreateDTO -> Notification
+            CreateMap<NotificationCreateDTO, Notification>();
+
+            #endregion
         }
     }
 }
