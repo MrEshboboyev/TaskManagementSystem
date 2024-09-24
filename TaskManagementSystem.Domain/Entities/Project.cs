@@ -14,6 +14,6 @@ public class Project
 
     // Navigation Properties
     public ApplicationUser Manager { get;  set; }                      // Reference to the project manager
-    public List<Task> Tasks { get;  set; }                  // List of tasks associated with the project
+    public List<TaskItem> Tasks { get;  set; }                  // List of tasks associated with the project
 }
 

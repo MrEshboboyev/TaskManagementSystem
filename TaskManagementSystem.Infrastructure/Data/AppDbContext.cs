@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using TaskManagementSystem.Domain.Entities;
-using Task = TaskManagementSystem.Domain.Entities.Task;
+using TaskItem = TaskManagementSystem.Domain.Entities.TaskItem;
 
 namespace TaskManagementSystem.Infrastructure.Data
 {
     public class AppDbContext(DbContextOptions<AppDbContext> options) : 
         IdentityDbContext<ApplicationUser>(options)
     {
-        public DbSet<Task> Tasks { get; set; }
+        public DbSet<TaskItem> Tasks { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Notification> Notifications { get; set; }
@@ -39,7 +39,7 @@ namespace TaskManagementSystem.Infrastructure.Data
                 .OnDelete(DeleteBehavior.Cascade);                 // Optional: Cascade delete if project is deleted
 
             // 4. Task to Comment (One-to-Many relationship)
-            builder.Entity<Task>()
+            builder.Entity<TaskItem>()
                 .HasMany(t => t.Comments)                          // A task can have many comments
                 .WithOne(c => c.Task)                              // A comment belongs to one task
                 .HasForeignKey(c => c.TaskId)                      // Foreign Key in Comment

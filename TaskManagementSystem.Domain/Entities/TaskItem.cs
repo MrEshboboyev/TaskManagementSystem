@@ -2,7 +2,7 @@
 
 namespace TaskManagementSystem.Domain.Entities;
 
-public class Task
+public class TaskItem
 {
     public int Id { get;  set; }                          // Unique identifier for the task
     public string Title { get;  set; }                     // Title of the task

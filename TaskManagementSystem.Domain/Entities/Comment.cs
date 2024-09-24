@@ -9,6 +9,6 @@ public class Comment
     public DateTime CreatedAt { get;  set; }                // Timestamp for when the comment was created
 
     // Navigation Properties
-    public Task Task { get;  set; }                         // Reference to the associated task
+    public TaskItem Task { get;  set; }                         // Reference to the associated task
     public ApplicationUser User { get;  set; }                         // Reference to the user who created the comment
 }
