@@ -1,7 +1,11 @@
-﻿namespace TaskManagementSystem.Application.DTOs;
+﻿using TaskManagementSystem.Domain.Enums;
+
+namespace TaskManagementSystem.Application.DTOs;
 
 public class TaskStatusDTO
 {
-    public TaskStatus Status { get; set; }
+    public string ManagerUserId { get; set; }
+    public int ProjectId { get; set; }
+    public TaskStatusEnum Status { get; set; }
 }
 

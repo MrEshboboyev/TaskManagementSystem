@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using TaskManagementSystem.Application.DTOs;
 using TaskManagementSystem.Domain.Entities;
 using TaskManagementSystem.Domain.Enums;
@@ -48,6 +49,22 @@ namespace TaskManagementSystem.Application.Mappings
 
             // ProjectUpdateDTO -> Project
             CreateMap<ProjectUpdateDTO, Project>();
+            #endregion
+
+            #region TaskItem
+
+            // TaskItem -> TaskDTO
+            CreateMap<TaskItem, TaskDTO>()
+                .ForMember(dest => dest.AssignedUser, opt => opt.MapFrom(src => src.AssignedUser.FullName))
+                .ForMember(dest => dest.ProjectName, opt => opt.MapFrom(src => src.Project.Name));
+
+            // CreateTaskDTO -> TaskItem
+            CreateMap<CreateTaskDTO, TaskItem>()
+                .ForMember(dest => dest.Project.ManagerUserId, opt => opt.MapFrom(src => src.ManagerUserId));
+
+            // UpdateTaskDTO -> TaskItem
+            CreateMap<UpdateTaskDTO, TaskItem>()
+                .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(src => DateTime.UtcNow));
             #endregion
         }
     }

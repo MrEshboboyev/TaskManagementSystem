@@ -11,7 +11,7 @@ public interface ITaskService
     Task<ResponseDTO<TaskDTO>> UpdateTaskAsync(int taskId, UpdateTaskDTO updateTaskDTO);
 
     // Delete a task
-    Task<bool> DeleteTaskAsync(int taskId);
+    Task<ResponseDTO<bool>> DeleteTaskAsync(DeleteTaskDTO deleteTaskDTO);
 
     // Get a task by its ID
     Task<ResponseDTO<TaskDTO>> GetTaskByIdAsync(int taskId);
