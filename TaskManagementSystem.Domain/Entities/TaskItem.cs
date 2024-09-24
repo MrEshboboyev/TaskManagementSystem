@@ -8,7 +8,7 @@ public class TaskItem
     public string Title { get;  set; }                     // Title of the task
     public string Description { get;  set; }               // Detailed description of the task
     public DateTime Deadline { get;  set; }                // Deadline by which the task should be completed
-    public Enums.TaskStatus Status { get;  set; }                // Enum: Current status of the task (e.g., Todo, In Progress, Done)
+    public TaskStatusEnum Status { get;  set; }                // Enum: Current status of the task (e.g., Todo, In Progress, Done)
     public TaskPriority Priority { get;  set; }            // Enum: Priority level of the task (e.g., Low, Medium, High)
     public string AssignedUserId { get;  set; }               // User assigned to the task
     public int ProjectId { get;  set; }                    // Associated project identifier
