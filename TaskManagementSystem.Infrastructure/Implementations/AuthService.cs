@@ -107,7 +107,10 @@ namespace TaskManagementSystem.Infrastructure.Implementations
                 };
 
                 // create and added to db user
-                await _userManager.CreateAsync(user, registerModel.Password);
+                var result = await _userManager.CreateAsync(user, registerModel.Password);
+
+                if(!result.Succeeded)
+                    return new ResponseDTO<string>($"Error : {result.Errors.FirstOrDefault()!.Description}");
 
                 // assign role
                 await _userManager.AddToRoleAsync(user, SD.Role_User);
