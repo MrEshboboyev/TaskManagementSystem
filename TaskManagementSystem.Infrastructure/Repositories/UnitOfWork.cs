@@ -9,6 +9,7 @@ namespace TaskManagementSystem.Infrastructure.Repositories
         public INotificationRepository Notification { get; private set; } = new NotificationRepository(db);
         public IProjectRepository Project { get; private set; } = new ProjectRepository(db);
         public ITaskItemRepository TaskItem { get; private set; } = new TaskItemRepository(db);
+        public ICompanyRepository Company { get; private set; } = new CompanyRepository(db);
 
         private readonly AppDbContext _db = db;
 
