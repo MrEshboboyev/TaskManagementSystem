@@ -20,6 +20,7 @@ namespace TaskManagementSystem.Infrastructure.Configurations
             services.AddScoped<INotificationService, NotificationService>();
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<ITaskService, TaskService>();
+            services.AddScoped<ICompanyService, CompanyService>();
 
             return services;
         }

@@ -1,7 +1,27 @@
+using TaskManagementSystem.Application.Mappings;
+using TaskManagementSystem.Infrastructure.Configurations;
+using TaskManagementSystem.Infrastructure.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+
+// configure database
+builder.Services.AddDatabaseConfiguration(builder.Configuration);
+
+// configure identity
+builder.Services.AddIdentityConfiguration();
+
+// configure JWT Authentication 
+builder.Services.AddJwtAuthentication(builder.Configuration);
+
+// configure lifetime for services
+builder.Services.AddApplicationServices(builder.Configuration);
+
+// configure automapper
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 var app = builder.Build();
 
@@ -24,4 +44,5 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.SeedDatabase();
 app.Run();
