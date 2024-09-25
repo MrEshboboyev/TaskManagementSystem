@@ -32,7 +32,6 @@ namespace TaskManagementSystem.Presentation.Controllers
             return Ok(result);
         }
 
-        [AllowAnonymous]
         [HttpGet("get-tasks-by-user-id")]
         public async Task<IActionResult> GetTasksByUserId()
         {

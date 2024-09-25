@@ -93,9 +93,15 @@ public class TaskService(IUnitOfWork unitOfWork, IMapper mapper) : ITaskService
             await _unitOfWork.TaskItem.AddAsync(taskForDb);
             await _unitOfWork.SaveAsync();
 
+            // get this task with details
+            var taskFromDb = await _unitOfWork.TaskItem.GetAsync(
+                filter: t => t.Id.Equals(taskForDb.Id),
+                includeProperties: "AssignedUser,Project"
+                );
+
             // mapping and return
             return new ResponseDTO<TaskDTO>(
-                _mapper.Map<TaskDTO>(taskForDb)
+                _mapper.Map<TaskDTO>(taskFromDb)
                 );
         }
         catch (Exception ex)
