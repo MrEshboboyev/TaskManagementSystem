@@ -112,9 +112,9 @@ namespace TaskManagementSystem.Presentation.Controllers
         }
 
         [HttpPut("assign-project-manager")]
-        public async Task<IActionResult> AssignProjectManager(int projectId)
+        public async Task<IActionResult> AssignProjectManager([FromBody] AssignProjectManagerModel assignProjectManagerModel)
         {
-            var result = await _projectService.AssignProjectManagerAsync(projectId, GetUserId());
+            var result = await _projectService.AssignProjectManagerAsync(assignProjectManagerModel.ProjectId, assignProjectManagerModel.ManagerId);
 
             if (!result.Success)
                 return BadRequest(result.Message);
