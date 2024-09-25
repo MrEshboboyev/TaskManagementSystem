@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using TaskManagementSystem.Application.Common.Interfaces;
 using TaskManagementSystem.Application.DTOs;
+using TaskManagementSystem.Application.DTOs.Task;
 using TaskManagementSystem.Application.Services.Interfaces;
 using TaskManagementSystem.Domain.Entities;
 
@@ -76,7 +77,7 @@ public class TaskService(IUnitOfWork unitOfWork, IMapper mapper) : ITaskService
     }
 
 
-    public async Task<ResponseDTO<TaskDTO>> CreateTaskAsync(CreateTaskDTO createTaskDTO)
+    public async Task<ResponseDTO<TaskDTO>> CreateTaskAsync(TaskCreateDTO createTaskDTO)
     {
         try
         {
@@ -110,7 +111,7 @@ public class TaskService(IUnitOfWork unitOfWork, IMapper mapper) : ITaskService
         }
     }
 
-    public async Task<ResponseDTO<TaskDTO>> UpdateTaskAsync(int taskId, UpdateTaskDTO updateTaskDTO)
+    public async Task<ResponseDTO<TaskDTO>> UpdateTaskAsync(int taskId, TaskUpdateDTO updateTaskDTO)
     {
         try
         {
@@ -208,7 +209,7 @@ public class TaskService(IUnitOfWork unitOfWork, IMapper mapper) : ITaskService
         }
     }
 
-    public async Task<ResponseDTO<bool>> DeleteTaskAsync(DeleteTaskDTO deleteTaskDTO)
+    public async Task<ResponseDTO<bool>> DeleteTaskAsync(TaskDeleteDTO deleteTaskDTO)
     {
         try
         {

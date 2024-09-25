@@ -1,4 +1,4 @@
-﻿namespace TaskManagementSystem.Application.DTOs;
+﻿namespace TaskManagementSystem.Application.DTOs.Project;
 
 public class ProjectCreateDTO
 {

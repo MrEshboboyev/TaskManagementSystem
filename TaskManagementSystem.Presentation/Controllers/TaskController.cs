@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using TaskManagementSystem.Application.Common.Models;
-using TaskManagementSystem.Application.DTOs;
+using TaskManagementSystem.Application.DTOs.Task;
 using TaskManagementSystem.Application.Services.Interfaces;
 
 namespace TaskManagementSystem.Presentation.Controllers
@@ -59,7 +59,7 @@ namespace TaskManagementSystem.Presentation.Controllers
         public async Task<IActionResult> CreateTask([FromBody] CreateTaskModel createTaskModel)
         {
             // prepare
-            CreateTaskDTO createTaskDTO = new()
+            TaskCreateDTO createTaskDTO = new()
             {
                 Title = createTaskModel.Title,
                 ProjectId = createTaskModel.ProjectId,
@@ -82,7 +82,7 @@ namespace TaskManagementSystem.Presentation.Controllers
         public async Task<IActionResult> UpdateTask(int taskId, [FromBody] UpdateTaskModel updateTaskModel)
         {
             // prepare
-            UpdateTaskDTO updateTaskDTO = new()
+            TaskUpdateDTO updateTaskDTO = new()
             {
                 Title = updateTaskModel.Title,
                 ProjectId = updateTaskModel.ProjectId,
@@ -105,7 +105,7 @@ namespace TaskManagementSystem.Presentation.Controllers
         public async Task<IActionResult> DeleteTask([FromBody] DeleteTaskModel deleteTaskModel)
         {
             // prepare
-            DeleteTaskDTO deleteTaskDTO = new()
+            TaskDeleteDTO deleteTaskDTO = new()
             {
                 ProjectId = deleteTaskModel.ProjectId,
                 TaskId = deleteTaskModel.TaskId,

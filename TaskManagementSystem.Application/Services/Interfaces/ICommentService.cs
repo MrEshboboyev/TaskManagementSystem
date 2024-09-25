@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using TaskManagementSystem.Application.DTOs;
+using TaskManagementSystem.Application.DTOs.Comment;
 
 namespace TaskManagementSystem.Application.Services.Interfaces;
 

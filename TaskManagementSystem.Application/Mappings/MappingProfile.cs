@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
-using TaskManagementSystem.Application.DTOs;
+using TaskManagementSystem.Application.DTOs.Comment;
+using TaskManagementSystem.Application.DTOs.Notification;
+using TaskManagementSystem.Application.DTOs.Project;
+using TaskManagementSystem.Application.DTOs.Task;
 using TaskManagementSystem.Domain.Entities;
 using TaskManagementSystem.Domain.Enums;
 
@@ -58,10 +61,10 @@ namespace TaskManagementSystem.Application.Mappings
                 .ForMember(dest => dest.ProjectName, opt => opt.MapFrom(src => src.Project.Name));
 
             // CreateTaskDTO -> TaskItem
-            CreateMap<CreateTaskDTO, TaskItem>();
+            CreateMap<TaskCreateDTO, TaskItem>();
 
             // UpdateTaskDTO -> TaskItem
-            CreateMap<UpdateTaskDTO, TaskItem>()
+            CreateMap<TaskUpdateDTO, TaskItem>()
                 .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(src => DateTime.UtcNow));
             #endregion
         }

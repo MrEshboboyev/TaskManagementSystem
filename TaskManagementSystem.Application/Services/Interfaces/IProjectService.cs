@@ -1,4 +1,5 @@
 ﻿using TaskManagementSystem.Application.DTOs;
+using TaskManagementSystem.Application.DTOs.Project;
 
 namespace TaskManagementSystem.Application.Services.Interfaces;
 

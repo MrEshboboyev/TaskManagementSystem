@@ -1,6 +1,6 @@
-﻿namespace TaskManagementSystem.Application.DTOs;
+﻿namespace TaskManagementSystem.Application.DTOs.Task;
 
-public class DeleteTaskDTO
+public class TaskDeleteDTO
 {
     public string ManagerUserId { get; set; }
     public int ProjectId { get; set; }

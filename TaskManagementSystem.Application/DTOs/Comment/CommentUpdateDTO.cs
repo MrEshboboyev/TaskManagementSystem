@@ -1,4 +1,4 @@
-﻿namespace TaskManagementSystem.Application.DTOs;
+﻿namespace TaskManagementSystem.Application.DTOs.Comment;
 
 public class CommentUpdateDTO
 {

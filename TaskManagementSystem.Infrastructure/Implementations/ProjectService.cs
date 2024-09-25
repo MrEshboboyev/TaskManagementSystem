@@ -2,6 +2,7 @@
 using System.Linq.Expressions;
 using TaskManagementSystem.Application.Common.Interfaces;
 using TaskManagementSystem.Application.DTOs;
+using TaskManagementSystem.Application.DTOs.Project;
 using TaskManagementSystem.Application.Services.Interfaces;
 using TaskManagementSystem.Domain.Entities;
 

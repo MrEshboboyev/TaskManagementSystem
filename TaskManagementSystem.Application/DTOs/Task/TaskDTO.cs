@@ -1,6 +1,6 @@
 ﻿using TaskManagementSystem.Domain.Enums;
 
-namespace TaskManagementSystem.Application.DTOs;
+namespace TaskManagementSystem.Application.DTOs.Task;
 
 public class TaskDTO
 {

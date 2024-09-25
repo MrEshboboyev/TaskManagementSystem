@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using TaskManagementSystem.Application.Common.Interfaces;
 using TaskManagementSystem.Application.DTOs;
+using TaskManagementSystem.Application.DTOs.Notification;
 using TaskManagementSystem.Application.Services.Interfaces;
 using TaskManagementSystem.Domain.Entities;
 

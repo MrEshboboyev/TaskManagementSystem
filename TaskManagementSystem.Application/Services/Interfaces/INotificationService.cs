@@ -1,4 +1,5 @@
 ﻿using TaskManagementSystem.Application.DTOs;
+using TaskManagementSystem.Application.DTOs.Notification;
 
 namespace TaskManagementSystem.Application.Services.Interfaces;
 

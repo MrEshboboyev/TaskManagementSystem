@@ -1,8 +1,8 @@
 ﻿using TaskManagementSystem.Domain.Enums;
 
-namespace TaskManagementSystem.Application.DTOs;
+namespace TaskManagementSystem.Application.DTOs.Task;
 
-public class CreateTaskDTO
+public class TaskCreateDTO
 {
     public string ManagerUserId { get; set; }
     public int ProjectId { get; set; }

@@ -1,17 +1,18 @@
 ﻿using TaskManagementSystem.Application.DTOs;
+using TaskManagementSystem.Application.DTOs.Task;
 
 namespace TaskManagementSystem.Application.Services.Interfaces;
 
 public interface ITaskService
 {
     // Create a new task
-    Task<ResponseDTO<TaskDTO>> CreateTaskAsync(CreateTaskDTO createTaskDTO);
+    Task<ResponseDTO<TaskDTO>> CreateTaskAsync(TaskCreateDTO createTaskDTO);
 
     // Update an existing task
-    Task<ResponseDTO<TaskDTO>> UpdateTaskAsync(int taskId, UpdateTaskDTO updateTaskDTO);
+    Task<ResponseDTO<TaskDTO>> UpdateTaskAsync(int taskId, TaskUpdateDTO updateTaskDTO);
 
     // Delete a task
-    Task<ResponseDTO<bool>> DeleteTaskAsync(DeleteTaskDTO deleteTaskDTO);
+    Task<ResponseDTO<bool>> DeleteTaskAsync(TaskDeleteDTO deleteTaskDTO);
 
     // Get a task by its ID
     Task<ResponseDTO<TaskDTO>> GetTaskByIdAsync(int taskId);

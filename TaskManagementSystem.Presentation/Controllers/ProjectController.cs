@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using TaskManagementSystem.Application.Common.Models;
-using TaskManagementSystem.Application.DTOs;
+using TaskManagementSystem.Application.DTOs.Project;
 using TaskManagementSystem.Application.Services.Interfaces;
 
 namespace TaskManagementSystem.Presentation.Controllers

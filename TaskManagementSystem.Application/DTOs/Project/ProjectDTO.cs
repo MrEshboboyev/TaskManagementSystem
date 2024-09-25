@@ -1,7 +1,6 @@
-﻿
-using TaskManagementSystem.Domain.Enums;
+﻿using TaskManagementSystem.Domain.Enums;
 
-namespace TaskManagementSystem.Application.DTOs;
+namespace TaskManagementSystem.Application.DTOs.Project;
 
 public class ProjectDTO
 {
