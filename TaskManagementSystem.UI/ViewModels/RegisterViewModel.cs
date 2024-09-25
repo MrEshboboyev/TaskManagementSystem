@@ -29,13 +29,11 @@ namespace TaskManagementSystem.UI.ViewModels
 
 
         // List of companies, PMs (for employee)
-        public IEnumerable<CompanyDTO> Companies { get; set; }
-        public IEnumerable<UserDTO> PMs { get; set; }
+        public IEnumerable<CompanyDTO>? Companies { get; set; }
+        public IEnumerable<UserDTO>? PMs { get; set; }
 
         // selected companyId and PMid
         public int? SelectedCompanyId { get; set; }
         public int? SelectedPMId { get; set; }
-
-        public string CompanyName { get; set; }
     }
 }

@@ -59,11 +59,6 @@
         </select>
     </div>
 
-    <div id="bossOptions" style="display: none;">
-        <label asp-for="CompanyName">Company Name:</label>
-        <input asp-for="CompanyName" class="form-control" />
-    </div>
-
     <button type="submit" class="btn btn-primary">Register</button>
 </form>
 
@@ -75,11 +70,12 @@
                 $('#employeeOptions').show();
                 $('#bossOptions').hide();
             } else if (selectedRole === "Boss") {
-                $('#bossOptions').show();
                 $('#employeeOptions').hide();
             } else {
                 $('#employeeOptions, #bossOptions').hide();
             }
         });
     </script>
+
+    <partial name="_ValidationScriptsPartial"/>
 }

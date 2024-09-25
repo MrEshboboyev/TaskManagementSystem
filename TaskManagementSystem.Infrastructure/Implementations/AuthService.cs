@@ -113,7 +113,7 @@ namespace TaskManagementSystem.Infrastructure.Implementations
                     return new ResponseDTO<string>($"Error : {result.Errors.FirstOrDefault()!.Description}");
 
                 // assign role
-                //await _userManager.AddToRoleAsync(user, SD.ROLE);
+                await _userManager.AddToRoleAsync(user, registerModel.RoleName);
 
                 return new ResponseDTO<string>(null, "Registration successful!");
             }
