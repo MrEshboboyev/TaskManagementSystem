@@ -13,6 +13,7 @@ namespace TaskManagementSystem.Infrastructure.Data
         public DbSet<Project> Projects { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Notification> Notifications { get; set; }
+        public DbSet<Company> Companies { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -58,6 +59,13 @@ namespace TaskManagementSystem.Infrastructure.Data
                 .WithOne(n => n.User)                              // A notification is tied to one user
                 .HasForeignKey(n => n.UserId)                      // Foreign Key in Notification
                 .OnDelete(DeleteBehavior.Cascade);                 // Optional: Cascade delete if user is deleted
+
+            // Company and ApplicationUser (Owner relationship)
+            builder.Entity<Company>()
+                .HasOne(c => c.Owner)
+                .WithMany(u => u.CompaniesOwned)
+                .HasForeignKey(c => c.OwnerId)
+                .OnDelete(DeleteBehavior.Restrict);  // Prevent cascading delete if the user is deleted
         }
     }
 }
