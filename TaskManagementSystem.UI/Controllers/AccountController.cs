@@ -29,6 +29,12 @@ namespace TaskManagementSystem.UI.Controllers
             return View(registerViewModel);
         }
 
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
@@ -62,6 +68,22 @@ namespace TaskManagementSystem.UI.Controllers
 
             TempData["error"] = result.Message;
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginModel loginModel)
+        {
+            var result = await _authService.LoginAsync(loginModel);
+
+            if (result.Success)
+            {
+                TempData["success"] = "Login successfully!";
+                return RedirectToAction("Index", "Home");
+            }
+
+            TempData["error"] = result.Message;
+
+            return View(loginModel);
         }
     }
 }
