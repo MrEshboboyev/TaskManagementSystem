@@ -53,8 +53,15 @@ namespace TaskManagementSystem.UI.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
+            var allCompanies = (await _companyService.GetAllCompaniesAsync()).Data;
+            var projectManagers = (await _userService.GetPMs()).Data;
+
+            // assign
+            model.Companies = allCompanies;
+            model.PMs = projectManagers;
+
             TempData["error"] = result.Message;
-            return View(registerModel);
+            return View(model);
         }
     }
 }

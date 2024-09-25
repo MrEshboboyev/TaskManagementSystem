@@ -30,7 +30,12 @@ namespace TaskManagementSystem.Infrastructure.Implementations
             {
                 var allPMs = await _userManager.GetUsersInRoleAsync(SD.Role_PM);
 
-                var mappedPMs = _mapper.Map<IEnumerable<UserDTO>>(allPMs);
+                var mappedPMs = allPMs.Select(user => new UserDTO
+                {
+                    UserId = user.Id,
+                    FullName = user.FullName,
+                    RoleName = SD.Role_PM,
+                });
 
                 return new ResponseDTO<IEnumerable<UserDTO>>(mappedPMs);
             }
