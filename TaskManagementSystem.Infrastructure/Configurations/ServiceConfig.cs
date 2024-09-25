@@ -21,6 +21,7 @@ namespace TaskManagementSystem.Infrastructure.Configurations
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<ITaskService, TaskService>();
             services.AddScoped<ICompanyService, CompanyService>();
+            services.AddScoped<IUserService, UserService>();
 
             return services;
         }

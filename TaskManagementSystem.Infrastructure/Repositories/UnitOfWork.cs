@@ -10,6 +10,7 @@ namespace TaskManagementSystem.Infrastructure.Repositories
         public IProjectRepository Project { get; private set; } = new ProjectRepository(db);
         public ITaskItemRepository TaskItem { get; private set; } = new TaskItemRepository(db);
         public ICompanyRepository Company { get; private set; } = new CompanyRepository(db);
+        public IUserRepository User { get; private set; } = new UserRepository(db);
 
         private readonly AppDbContext _db = db;
 

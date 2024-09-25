@@ -54,7 +54,7 @@
             <option value="">-- Select Project Manager --</option>
             @foreach (var pm in Model.PMs)
             {
-                <option value="@pm.Id">@pm.Name</option>
+                <option value="@pm.UserId">@pm.FullName</option>
             }
         </select>
     </div>

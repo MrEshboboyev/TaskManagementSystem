@@ -7,6 +7,7 @@
         IProjectRepository Project { get; }
         ITaskItemRepository TaskItem { get; }
         ICompanyRepository Company { get; }
+        IUserRepository User { get; }
 
         Task SaveAsync();
     }
