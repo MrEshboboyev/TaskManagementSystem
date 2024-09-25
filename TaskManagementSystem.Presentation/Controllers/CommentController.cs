@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using TaskManagementSystem.Application.Common.Models;
 using TaskManagementSystem.Application.DTOs;
@@ -6,6 +7,7 @@ using TaskManagementSystem.Application.Services.Interfaces;
 
 namespace TaskManagementSystem.Presentation.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CommentController(ICommentService commentService) : ControllerBase
@@ -18,6 +20,7 @@ namespace TaskManagementSystem.Presentation.Controllers
             ?? throw new Exception("Login required!");
         #endregion
 
+        [AllowAnonymous]
         [HttpGet("get-comments-for-task")]
         public async Task<IActionResult> GetCommentsForTask(int taskId)
         {
@@ -29,6 +32,7 @@ namespace TaskManagementSystem.Presentation.Controllers
             return Ok(result);
         }
 
+        [AllowAnonymous]
         [HttpGet("get-comment-by-id")]
         public async Task<IActionResult> GetCommentById(int commentId)
         {
