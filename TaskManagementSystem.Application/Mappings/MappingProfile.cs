@@ -57,9 +57,9 @@ namespace TaskManagementSystem.Application.Mappings
                 .ForMember(dest => dest.AssignedUser, opt => opt.MapFrom(src => src.AssignedUser.FullName))
                 .ForMember(dest => dest.ProjectName, opt => opt.MapFrom(src => src.Project.Name));
 
-            // CreateTaskDTO -> TaskItem
-            CreateMap<CreateTaskDTO, TaskItem>()
-                .ForMember(dest => dest.Project.ManagerUserId, opt => opt.MapFrom(src => src.ManagerUserId));
+            //// CreateTaskDTO -> TaskItem
+            //CreateMap<CreateTaskDTO, TaskItem>()
+            //    .ForMember(dest => dest.Project.ManagerUserId, opt => opt.MapFrom(src => src.ManagerUserId));
 
             // UpdateTaskDTO -> TaskItem
             CreateMap<UpdateTaskDTO, TaskItem>()

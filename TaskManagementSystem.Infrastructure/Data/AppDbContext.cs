@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 using TaskManagementSystem.Domain.Entities;
 using TaskItem = TaskManagementSystem.Domain.Entities.TaskItem;
 
 namespace TaskManagementSystem.Infrastructure.Data
 {
-    public class AppDbContext(DbContextOptions<AppDbContext> options) : 
+    public class AppDbContext(DbContextOptions<AppDbContext> options) :
         IdentityDbContext<ApplicationUser>(options)
     {
         public DbSet<TaskItem> Tasks { get; set; }
@@ -17,12 +18,11 @@ namespace TaskManagementSystem.Infrastructure.Data
         {
             base.OnModelCreating(builder);
 
-            // 1. ApplicationUser to Task (One-to-Many relationship)
-            builder.Entity<ApplicationUser>()
-                .HasMany(u => u.AssignedTasks)                     // One user has many assigned tasks
-                .WithOne()                                         // A task is assigned to one user
-                .HasForeignKey(t => t.AssignedUserId)              // Foreign Key in Task
-                .OnDelete(DeleteBehavior.Restrict);                // Optional: Prevent cascading deletes
+            builder.Entity<TaskItem>()
+                .HasOne(t => t.AssignedUser)
+                .WithMany(u => u.AssignedTasks)
+                .HasForeignKey(t => t.AssignedUserId)
+                .OnDelete(DeleteBehavior.Restrict);  // Optional, define how deletions should behave
 
             // 2. ApplicationUser to Project (One-to-Many relationship)
             builder.Entity<ApplicationUser>()
