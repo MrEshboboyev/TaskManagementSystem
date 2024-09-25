@@ -2,7 +2,9 @@
 {
     public static class SD
     {
-        public const string Role_Admin = "Admin";
-        public const string Role_User = "User";
+        public const string Role_Architect = "Architect";
+        public const string Role_Boss = "Boss";
+        public const string Role_PM = "PM";
+        public const string Role_Employee = "Employee";
     }
 }

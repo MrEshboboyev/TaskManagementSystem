@@ -9,11 +9,11 @@ using TaskManagementSystem.Infrastructure.Data;
 
 #nullable disable
 
-namespace TaskManagementSystem.Infrastructure.Migrations
+namespace TaskManagementSystem.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240925053031_addedEntities")]
-    partial class addedEntities
+    [Migration("20240925131904_initialCreate")]
+    partial class initialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -165,6 +165,9 @@ namespace TaskManagementSystem.Infrastructure.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("CompanyId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("text");
@@ -215,6 +218,8 @@ namespace TaskManagementSystem.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CompanyId");
+
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -254,6 +259,33 @@ namespace TaskManagementSystem.Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("TaskManagementSystem.Domain.Entities.Company", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("OwnerId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OwnerId");
+
+                    b.ToTable("Companies");
                 });
 
             modelBuilder.Entity("TaskManagementSystem.Domain.Entities.Notification", b =>
@@ -419,6 +451,13 @@ namespace TaskManagementSystem.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("TaskManagementSystem.Domain.Entities.ApplicationUser", b =>
+                {
+                    b.HasOne("TaskManagementSystem.Domain.Entities.Company", null)
+                        .WithMany("Employees")
+                        .HasForeignKey("CompanyId");
+                });
+
             modelBuilder.Entity("TaskManagementSystem.Domain.Entities.Comment", b =>
                 {
                     b.HasOne("TaskManagementSystem.Domain.Entities.TaskItem", "Task")
@@ -436,6 +475,17 @@ namespace TaskManagementSystem.Infrastructure.Migrations
                     b.Navigation("Task");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("TaskManagementSystem.Domain.Entities.Company", b =>
+                {
+                    b.HasOne("TaskManagementSystem.Domain.Entities.ApplicationUser", "Owner")
+                        .WithMany("CompaniesOwned")
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("TaskManagementSystem.Domain.Entities.Notification", b =>
@@ -485,9 +535,16 @@ namespace TaskManagementSystem.Infrastructure.Migrations
 
                     b.Navigation("Comments");
 
+                    b.Navigation("CompaniesOwned");
+
                     b.Navigation("ManagedProjects");
 
                     b.Navigation("Notifications");
+                });
+
+            modelBuilder.Entity("TaskManagementSystem.Domain.Entities.Company", b =>
+                {
+                    b.Navigation("Employees");
                 });
 
             modelBuilder.Entity("TaskManagementSystem.Domain.Entities.Project", b =>

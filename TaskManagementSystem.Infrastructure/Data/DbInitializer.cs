@@ -26,11 +26,13 @@ namespace TaskManagementSystem.Infrastructure.Data
                 }
 
                 // If "Admin" role does not exist, create admin user and roles
-                if (!_roleManager.RoleExistsAsync(SD.Role_Admin).GetAwaiter().GetResult())
+                if (!_roleManager.RoleExistsAsync(SD.Role_Architect).GetAwaiter().GetResult())
                 {
                     // creating roles
-                    _roleManager.CreateAsync(new IdentityRole(SD.Role_Admin)).Wait();
-                    _roleManager.CreateAsync(new IdentityRole(SD.Role_User)).Wait();
+                    _roleManager.CreateAsync(new IdentityRole(SD.Role_Architect)).Wait();
+                    _roleManager.CreateAsync(new IdentityRole(SD.Role_Boss)).Wait();
+                    _roleManager.CreateAsync(new IdentityRole(SD.Role_PM)).Wait();
+                    _roleManager.CreateAsync(new IdentityRole(SD.Role_Employee)).Wait();
 
                     // create admin user
                     _userManager.CreateAsync(new ApplicationUser
@@ -46,7 +48,7 @@ namespace TaskManagementSystem.Infrastructure.Data
                     // finding user and assign role
                     var admin = _db.Users.FirstOrDefault(u => u.Email == "admin@example.com");
 
-                    _userManager.AddToRoleAsync(admin, SD.Role_Admin).GetAwaiter().GetResult();
+                    _userManager.AddToRoleAsync(admin, SD.Role_Architect).GetAwaiter().GetResult();
                 }
             }
             catch (Exception)
