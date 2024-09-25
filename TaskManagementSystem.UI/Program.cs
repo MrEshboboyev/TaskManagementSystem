@@ -1,6 +1,8 @@
 using TaskManagementSystem.Application.Mappings;
 using TaskManagementSystem.Infrastructure.Configurations;
 using TaskManagementSystem.Infrastructure.Services;
+using TaskManagementSystem.UI.Services;
+using TaskManagementSystem.UI.Services.IServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +21,7 @@ builder.Services.AddJwtAuthentication(builder.Configuration);
 
 // configure lifetime for services
 builder.Services.AddApplicationServices(builder.Configuration);
+builder.Services.AddScoped<ITokenProvider, TokenProvider>();
 
 // configure automapper
 builder.Services.AddAutoMapper(typeof(MappingProfile));

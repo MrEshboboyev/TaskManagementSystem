@@ -6,5 +6,7 @@
         public const string Role_Boss = "Boss";
         public const string Role_PM = "PM";
         public const string Role_Employee = "Employee";
+
+        public const string TokenCookie = "JWTToken";
     }
 }

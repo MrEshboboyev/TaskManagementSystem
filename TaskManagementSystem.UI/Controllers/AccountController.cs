@@ -1,18 +1,24 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using TaskManagementSystem.Application.Common.Models;
 using TaskManagementSystem.Application.Services.Interfaces;
 using TaskManagementSystem.UI.ViewModels;
+using TaskManagementSystem.UI.Services.IServices;
 
 namespace TaskManagementSystem.UI.Controllers
 {
     public class AccountController(ICompanyService companyService,
         IUserService userService,
-        IAuthService authService) : Controller
+        IAuthService authService,
+        ITokenProvider tokenProvider) : Controller
     {
         private readonly ICompanyService _companyService = companyService;
         private readonly IUserService _userService = userService;
         private readonly IAuthService _authService = authService;
-
+        private readonly ITokenProvider _tokenProvider = tokenProvider;
 
         [HttpGet]
         public async Task<IActionResult> Register()
@@ -77,6 +83,12 @@ namespace TaskManagementSystem.UI.Controllers
 
             if (result.Success)
             {
+                // sign in user applied
+                await SignInUser(result.Data);
+
+                // set token for user
+                _tokenProvider.SetToken(result.Data);
+
                 TempData["success"] = "Login successfully!";
                 return RedirectToAction("Index", "Home");
             }
@@ -85,5 +97,34 @@ namespace TaskManagementSystem.UI.Controllers
 
             return View(loginModel);
         }
+
+        #region Private Methods
+        // Sign In User
+        private async Task SignInUser(string token)
+        {
+            var handler = new JwtSecurityTokenHandler();
+
+            var jwt = handler.ReadJwtToken(token);
+
+            var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            // adding claims
+            identity.AddClaim(new Claim(JwtRegisteredClaimNames.Email,
+                jwt.Claims.FirstOrDefault(u => u.Type == JwtRegisteredClaimNames.Email).Value));
+            identity.AddClaim(new Claim(JwtRegisteredClaimNames.Sub,
+                jwt.Claims.FirstOrDefault(u => u.Type == JwtRegisteredClaimNames.Sub).Value));
+            identity.AddClaim(new Claim(JwtRegisteredClaimNames.Name,
+                jwt.Claims.FirstOrDefault(u => u.Type == JwtRegisteredClaimNames.Name).Value));
+
+            identity.AddClaim(new Claim(ClaimTypes.Name,
+                jwt.Claims.FirstOrDefault(u => u.Type == JwtRegisteredClaimNames.Email).Value));
+            identity.AddClaim(new Claim(ClaimTypes.Role,
+                jwt.Claims.FirstOrDefault(u => u.Type == "role").Value));
+
+
+            var principal = new ClaimsPrincipal(identity);
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+        }
+        #endregion
     }
 }
