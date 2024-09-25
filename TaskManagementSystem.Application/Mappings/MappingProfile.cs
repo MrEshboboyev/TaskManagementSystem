@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using TaskManagementSystem.Application.DTOs.Comment;
+using TaskManagementSystem.Application.DTOs.Company;
 using TaskManagementSystem.Application.DTOs.Notification;
 using TaskManagementSystem.Application.DTOs.Project;
 using TaskManagementSystem.Application.DTOs.Task;
@@ -66,6 +67,19 @@ namespace TaskManagementSystem.Application.Mappings
             // UpdateTaskDTO -> TaskItem
             CreateMap<TaskUpdateDTO, TaskItem>()
                 .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(src => DateTime.UtcNow));
+            #endregion
+
+            #region Company
+
+            // Company -> CompanyDTO
+            CreateMap<Company, CompanyDTO>()
+                .ForMember(dest => dest.OwnerName, opt => opt.MapFrom(src => src.Owner.FullName));
+
+            // CompanyCreateDTO -> Company
+            CreateMap<CompanyCreateDTO, Company>();
+
+            // CompanyUpdateDTO -> Company
+            CreateMap<CompanyUpdateDTO, Company>();
             #endregion
         }
     }
