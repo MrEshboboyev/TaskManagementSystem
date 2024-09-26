@@ -7,18 +7,22 @@ using TaskManagementSystem.Application.Common.Models;
 using TaskManagementSystem.Application.Services.Interfaces;
 using TaskManagementSystem.UI.ViewModels;
 using TaskManagementSystem.UI.Services.IServices;
+using Microsoft.AspNetCore.Identity;
+using TaskManagementSystem.Domain.Entities;
 
 namespace TaskManagementSystem.UI.Controllers
 {
     public class AccountController(ICompanyService companyService,
         IUserService userService,
         IAuthService authService,
-        ITokenProvider tokenProvider) : Controller
+        ITokenProvider tokenProvider,
+        SignInManager<ApplicationUser> signInManager) : Controller
     {
         private readonly ICompanyService _companyService = companyService;
         private readonly IUserService _userService = userService;
         private readonly IAuthService _authService = authService;
         private readonly ITokenProvider _tokenProvider = tokenProvider;
+        private readonly SignInManager<ApplicationUser> _signInManager = signInManager;
 
         [HttpGet]
         public async Task<IActionResult> Register()
@@ -96,6 +100,14 @@ namespace TaskManagementSystem.UI.Controllers
             TempData["error"] = result.Message;
 
             return View(loginModel);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            _tokenProvider.ClearToken();
+            return RedirectToAction("Index", "Home");
         }
 
         #region Private Methods
