@@ -48,6 +48,24 @@ namespace TaskManagementSystem.Infrastructure.Implementations
             }
         }
 
+        public async Task<ResponseDTO<IEnumerable<CompanyDTO>>> GetUserCompaniesAsync(string userId)
+        {
+            try
+            {
+                var companiesFromDb = await _unitOfWork.Company.GetAllAsync(
+                    filter: c => c.OwnerId.Equals(userId),
+                    includeProperties: "Owner");
+
+                var mappedCompanies = _mapper.Map<IEnumerable<CompanyDTO>>(companiesFromDb);
+
+                return new ResponseDTO<IEnumerable<CompanyDTO>>(mappedCompanies);
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDTO<IEnumerable<CompanyDTO>>(ex.Message);
+            }
+        }
+
 
         public async Task<ResponseDTO<CompanyDTO>> CreateCompany(CompanyCreateDTO companyCreateDTO)
         {

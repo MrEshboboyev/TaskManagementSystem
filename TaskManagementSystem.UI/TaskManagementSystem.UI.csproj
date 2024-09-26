@@ -11,11 +11,17 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.5" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\TaskManagementSystem.Application\TaskManagementSystem.Application.csproj" />
     <ProjectReference Include="..\TaskManagementSystem.Infrastructure\TaskManagementSystem.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Boss\Data\" />
+    <Folder Include="Areas\Boss\Models\" />
   </ItemGroup>
 
 </Project>

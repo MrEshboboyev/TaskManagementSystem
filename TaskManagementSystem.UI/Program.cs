@@ -54,6 +54,11 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
+app.MapAreaControllerRoute(
+    name: "MyAreaBoss",
+    areaName: "Boss",
+    pattern: "Boss/{controller=Company}/{action=CompanyIndex}");
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
