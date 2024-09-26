@@ -21,15 +21,34 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav me-auto">
-                        @if (User.IsInRole(SD.Role_Boss))
+                        @if (User.Identity.IsAuthenticated)
                         {
+                            @if (User.IsInRole(SD.Role_Boss))
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Company Management
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a class="dropdown-item" asp-area="@SD.Role_Boss" asp-controller="Company" asp-action="CompanyIndex">Companies</a>
+                                        </li>
+                                        <li><hr class="dropdown-divider"></li>
+                                    </ul>
+                                </li>
+                            }
+
+                            @* Notifications *@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Company Management
+                                    Notification Management
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item">
-                                        <a class="dropdown-item" asp-area="@SD.Role_Boss" asp-controller="Company" asp-action="CompanyIndex">Companies</a>
+                                        <a class="dropdown-item" asp-area="" asp-controller="Notification" asp-action="Index">Notifications</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-area="" asp-controller="Notification" asp-action="Index">Unread Notifications</a>
                                     </li>
                                     <li><hr class="dropdown-divider"></li>
                                 </ul>
