@@ -1,0 +1,49 @@
+﻿@model NotificationDTO
+
+<form asp-action="Update" method="post">
+    <input asp-for="Id" name="notificationId" hidden />
+    <br />
+    <div class="container border p-3">
+        <h1 class="text-white text-center">Accept/Decline Notification</h1>
+        <hr />
+        <div class="row">
+            <div class="col-2">
+                <label class="control-label pt-2" style="font-size:20px;">Sender Name</label>
+            </div>
+            <div class="col-10 pb-3">
+                <input disabled asp-for="SenderName" class="form-control" />
+                <span asp-validation-for="SenderName" class="text-danger"></span>
+            </div>
+            <div class="col-2">
+                <label class="control-label pt-2" style="font-size:20px;">Recipient Name</label>
+            </div>
+            <div class="col-10 pb-3">
+                <input disabled asp-for="RecipientName" class="form-control" />
+                <span asp-validation-for="RecipientName" class="text-danger"></span>
+            </div>
+            <div class="col-2">
+                <label class="control-label pt-2" style="font-size:20px;">Type</label>
+            </div>
+            <div class="col-10 pb-3">
+                <input disabled asp-for="Type" class="form-control" />
+                <span asp-validation-for="Type" class="text-danger"></span>
+            </div>
+            <div class="col-2">
+                <label class="control-label pt-2" style="font-size:20px;">Message</label>
+            </div>
+            <div class="col-10 pb-3">
+                <textarea disabled asp-for="Message" class="form-control" rows="5"></textarea>
+                <span asp-validation-for="Message" class="text-danger"></span>
+            </div>
+            <div class="col-5 offset-2">
+                <button type="submit" name="Status" value="@NotificationStatus.Accepted" class="btn btn-success form-control">Accept</button>
+            </div>
+            <div class="col-5">
+                <button type="submit" name="Status" value="@NotificationStatus.Declined" class="btn btn-danger form-control">Decline</button>
+            </div>
+            <div class="col-10 offset-2 mt-2">
+                <a asp-action="Index" class="btn btn-primary form-control">Back to List</a>
+            </div>
+        </div>
+    </div>
+</form>

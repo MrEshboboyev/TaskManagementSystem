@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Runtime.CompilerServices;
 using System.Security.Claims;
+using TaskManagementSystem.Application.DTOs.Notification;
 using TaskManagementSystem.Application.Services.Interfaces;
+using TaskManagementSystem.Domain.Enums;
 
 namespace TaskManagementSystem.UI.Controllers
 {
@@ -22,6 +25,29 @@ namespace TaskManagementSystem.UI.Controllers
             return View(userNotifications.Data);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Update(int notificationId)
+        {
+            var notification = await _notificationService.GetNotificationDetailsAsync(notificationId);
+            return View(notification.Data);
+        }
 
+        [HttpPost]
+        public async Task<IActionResult> Update(int notificationId, NotificationStatus status)
+        {
+            NotificationResponseDTO notificationResponseDTO = new() { Status = status };
+
+            var result = await _notificationService.RespondToNotificationAsync(notificationId,
+                notificationResponseDTO);
+
+            if (result.Success)
+            {
+                TempData["success"] = "Notification response has been successfully updated.";
+                return RedirectToAction("Index");
+            }
+
+            TempData["error"] = $"Failed to update notification response. Error: {result.Message}";
+            return RedirectToAction(nameof(Update), new { notificationId });
+        }
     }
 }
