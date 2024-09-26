@@ -32,8 +32,15 @@ namespace TaskManagementSystem.Application.Mappings
             #region Notification
 
             // NotificationCreateDTO -> Notification
-            CreateMap<NotificationCreateDTO, Notification>();
+            CreateMap<NotificationCreateDTO, Notification>()
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => NotificationStatus.Pending))
+                .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => DateTime.UtcNow))
+                .ForMember(dest => dest.IsRead, opt => opt.MapFrom(src => false));
 
+            // Notification => NotificationDTO
+            CreateMap<Notification, NotificationDTO>()
+                .ForMember(dest => dest.SenderName, opt => opt.MapFrom(src => src.Sender.FullName))
+                .ForMember(dest => dest.RecipientName, opt => opt.MapFrom(src => src.Recipient.FullName));
             #endregion
 
             #region Project

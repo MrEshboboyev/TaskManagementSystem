@@ -22,7 +22,7 @@ namespace TaskManagementSystem.Presentation.Controllers
         [HttpGet("get-user-notifications")]
         public async Task<IActionResult> GetUserNotifications()
         {
-            var result = await _notificationService.GetUserNotificationsAsync(GetUserId());
+            var result = await _notificationService.GetNotificationsForUserAsync(GetUserId());
 
             if(!result.Success)
                 return BadRequest(result.Message);
@@ -33,7 +33,7 @@ namespace TaskManagementSystem.Presentation.Controllers
         [HttpGet("get-unread-notification")]
         public async Task<IActionResult> GetUnreadNotifications()
         {
-            var result = await _notificationService.GetUnreadNotificationsAsync(GetUserId());
+            var result = await _notificationService.GetPendingNotificationsAsync(GetUserId());
 
             if (!result.Success)
                 return BadRequest(result.Message);
@@ -58,10 +58,10 @@ namespace TaskManagementSystem.Presentation.Controllers
             NotificationCreateDTO notificationCreateDTO = new()
             {
                 Message = message,
-                UserId = GetUserId()
+                SenderId = GetUserId()
             };
 
-            var result = await _notificationService.SendNotificationAsync(notificationCreateDTO);
+            var result = await _notificationService.CreateNotificationAsync(notificationCreateDTO);
 
             if (!result.Success)
                 return BadRequest(result.Message);
