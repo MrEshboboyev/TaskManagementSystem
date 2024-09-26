@@ -44,5 +44,35 @@ namespace TaskManagementSystem.Infrastructure.Implementations
                 return new ResponseDTO<IEnumerable<UserDTO>>(ex.Message);
             }
         }
+
+        public async Task<ResponseDTO<IEnumerable<UserDTO>>> GetProjectManagersByCompanyId(int companyId)
+        {
+            try
+            {
+                List <UserDTO> pms = [];
+
+                var company = await _unitOfWork.Company.GetAsync(
+                    filter: c => c.Id.Equals(companyId),
+                    includeProperties: "Employees"
+                    );
+
+                foreach (var employee in company.Employees)
+                {
+                    if (await _userManager.IsInRoleAsync(employee, SD.Role_PM))
+                        pms.Add(new UserDTO()
+                        {
+                            FullName = employee.FullName,
+                            RoleName = SD.Role_PM,
+                            UserId = employee.Id
+                        });
+                }
+
+                return new ResponseDTO<IEnumerable<UserDTO>>(pms);
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDTO<IEnumerable<UserDTO>>(ex.Message);
+            }
+        }
     }
 }

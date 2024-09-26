@@ -8,81 +8,97 @@
 
 <form asp-action="Register" method="post">
     <div class="row">
+        <div class="col-12 col-md-6 offset-md-3 pb-2">
+            <input asp-for="Email" class="form-control" placeholder="Email..." />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="col-12 col-md-6 offset-md-3 pb-2">
+            <input asp-for="FullName" class="form-control" placeholder="Name..." />
+            <span asp-validation-for="FullName" class="text-danger"></span>
+        </div>
+        <div class="col-12 col-md-6 offset-md-3 pb-2">
+            <input asp-for="Password" class="form-control" placeholder="Password..." />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="col-12 col-md-6 offset-md-3 pb-2">
+            <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm Password..." />
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>
+        <div class="col-12 col-md-6 offset-md-3 pb-2">
+            <select asp-for="Role" class="form-control" id="roleSelect">
+                <option value="">-- Select Role --</option>
+                <option value="Employee">Employee</option>
+                <option value="PM">Project Manager</option>
+                <option value="Boss">Boss</option>
+            </select>
+        </div>
+
+        <!-- Conditional UI for "Project Manager" or "Employee" roles -->
+        <div id="companyOptions" style="display: none;">
             <div class="col-12 col-md-6 offset-md-3 pb-2">
-                <input asp-for="Email" class="form-control" placeholder="Email..." />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="col-12 col-md-6 offset-md-3 pb-2">
-                <input asp-for="FullName" class="form-control" placeholder="Name..." />
-                <span asp-validation-for="FullName" class="text-danger"></span>
-            </div>
-            <div class="col-12 col-md-6 offset-md-3 pb-2">
-                <input asp-for="Password" class="form-control" placeholder="Password..." />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="col-12 col-md-6 offset-md-3 pb-2">
-                <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm Password..." />
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-            </div>
-            <div class="col-12 col-md-6 offset-md-3 pb-2">
-                <select asp-for="Role" class="form-control" id="roleSelect">
-                    <option value="">-- Select Role --</option>
-                    <option value="Employee">Employee</option>
-                    <option value="PM">Project Manager</option>
-                    <option value="Boss">Boss</option>
+                <select asp-for="SelectedCompanyId" class="form-control" id="companySelect">
+                    <option value="">-- Select Company --</option>
+                    if (@Model.Companies is not null)
+                    {
+                    @foreach (var company in Model.Companies)
+                    {
+                        <option value="@company.Id">@company.Name</option>
+                    }
+                    }
                 </select>
             </div>
+        </div>
 
-            <!-- Conditional UI based on Role -->
-            <div id="employeeOptions" style="display: none;">
-                <div class="col-12 col-md-6 offset-md-3 pb-2">
-                    <select asp-for="SelectedCompanyId" class="form-control">
-                        @* Populate with companies *@
-                        <option value="">-- Select Company --</option>
-                        if (@Model.Companies is not null)
-                        {
-                            @foreach (var company in Model.Companies)
-                            {
-                                <option value="@company.Id">@company.Name</option>
-                            }
-                        }
-                    </select>
-                </div>
-                
-                <div class="col-12 col-md-6 offset-md-3 pb-2">
-                    <select asp-for="SelectedPMId" class="form-control">
-                        <option value="">-- Select Project Manager --</option>
-                        if (@Model.PMs is not null)
-                        {
-                            @foreach (var pm in Model.PMs)
-                            {
-                                <option value="@pm.UserId">@pm.FullName</option>
-                            }
-                        }
-                    </select>
-                </div>
-            </div>
-
+        <!-- Conditional UI for "Employee" role -->
+        <div id="employeeOptions" style="display: none;">
             <div class="col-12 col-md-6 offset-md-3 pb-2">
-                <button type="submit" class="form-control btn btn-success" value="Submit">Register</button>
+                <select asp-for="SelectedPMId" class="form-control" id="pmSelect">
+                    <option value="">-- Select Project Manager --</option>
+                </select>
             </div>
+        </div>
+
+        <div class="col-12 col-md-6 offset-md-3 pb-2">
+            <button type="submit" class="form-control btn btn-success" value="Submit">Register</button>
+        </div>
     </div>
 </form>
 
 @section Scripts {
     <script>
-        $('#roleSelect').on('change', function () {
+        $('#roleSelect').on('change', function() {
             var selectedRole = $(this).val();
             if (selectedRole === "Employee") {
-                $('#employeeOptions').show();
-                $('#bossOptions').hide();
-            } else if (selectedRole === "Boss") {
-                $('#employeeOptions').hide();
+                $('#companyOptions').show();
+                $('#employeeOptions').hide(); // Hide the PM dropdown until a company is selected
+            } else if (selectedRole === "PM") {
+                $('#companyOptions').show();
+                $('#employeeOptions').hide(); // No need for the PM dropdown in this case
             } else {
-                $('#employeeOptions, #bossOptions').hide();
+                $('#companyOptions, #employeeOptions').hide();
+            }
+        });
+
+        $('#companySelect').on('change', function() {
+            var companyId = $(this).val();
+            if (companyId) {
+                $.ajax({
+                    url: '@Url.Action("GetProjectManagers", "AccountController")',
+                    data: { companyId: companyId },
+                    success: function(data) {
+                        $('#pmSelect').empty();
+                        $('#pmSelect').append('<option value="">-- Select Project Manager --</option>');
+                        $.each(data, function(i, pm) {
+                            $('#pmSelect').append('<option value="' + pm.UserId + '">' + pm.FullName + '</option>');
+                        });
+                        $('#employeeOptions').show(); // Show the PM dropdown now
+                    }
+                });
+            } else {
+                $('#employeeOptions').hide(); // Hide if no company is selected
             }
         });
     </script>
 
-    <partial name="_ValidationScriptsPartial"/>
+    <partial name="_ValidationScriptsPartial" />
 }

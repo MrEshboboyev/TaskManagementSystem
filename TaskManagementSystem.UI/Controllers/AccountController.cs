@@ -66,7 +66,7 @@ namespace TaskManagementSystem.UI.Controllers
             if (result.Success)
             {
                 TempData["success"] = result.Message;
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction(nameof(Login));
             }
 
             var allCompanies = (await _companyService.GetAllCompaniesAsync()).Data;
@@ -109,6 +109,14 @@ namespace TaskManagementSystem.UI.Controllers
             _tokenProvider.ClearToken();
             return RedirectToAction("Index", "Home");
         }
+
+        public async Task<IActionResult> GetProjectManagers(int companyId)
+        {
+            var projectManagers = await _userService.GetProjectManagersByCompanyId(companyId);
+
+            return Json(projectManagers.Data);
+        }
+
 
         #region Private Methods
         // Sign In User
