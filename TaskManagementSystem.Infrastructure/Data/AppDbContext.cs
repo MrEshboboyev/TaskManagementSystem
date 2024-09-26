@@ -53,13 +53,19 @@ namespace TaskManagementSystem.Infrastructure.Data
                 .HasForeignKey(c => c.UserId)                      // Foreign Key in Comment
                 .OnDelete(DeleteBehavior.Cascade);                 // Optional: Cascade delete if user is deleted
 
-            // 6. ApplicationUser to Notification (One-to-Many relationship)
-            builder.Entity<ApplicationUser>()
-                .HasMany(u => u.Notifications)                     // One user can receive many notifications
-                .WithOne(n => n.User)                              // A notification is tied to one user
-                .HasForeignKey(n => n.UserId)                      // Foreign Key in Notification
-                .OnDelete(DeleteBehavior.Cascade);                 // Optional: Cascade delete if user is deleted
+            // Configure Notification relationships
+            builder.Entity<Notification>()
+                .HasOne(n => n.Sender)
+                .WithMany()  // Sender doesn't need a navigation property for the notifications they send
+                .HasForeignKey(n => n.SenderId)
+                .OnDelete(DeleteBehavior.Restrict); // Avoid cascading delete to prevent issues when deleting a user
 
+            builder.Entity<Notification>()
+                .HasOne(n => n.Recipient)
+                .WithMany(u => u.Notifications)  // Recipient has a navigation property for received notifications
+                .HasForeignKey(n => n.RecipientId)
+                .OnDelete(DeleteBehavior.Cascade); // Notifications should be deleted when the recipient is deleted
+            
             // Company and ApplicationUser (Owner relationship)
             builder.Entity<Company>()
                 .HasOne(c => c.Owner)

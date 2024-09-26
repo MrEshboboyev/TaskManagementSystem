@@ -7,7 +7,7 @@ using TaskManagementSystem.Application.Services.Interfaces;
 
 namespace TaskManagementSystem.UI.Areas.Boss.Controllers
 {
-    [Area("Boss")]
+    [Area(SD.Role_Boss)]
     [Authorize(Roles = SD.Role_Boss)]
     public class CompanyController(ICompanyService companyService) : Controller
     {
