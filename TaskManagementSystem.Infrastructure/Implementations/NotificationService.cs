@@ -15,6 +15,34 @@ public class NotificationService(IUnitOfWork unitOfWork, IMapper mapper) : INoti
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly IMapper _mapper = mapper;
 
+    public async Task<ResponseDTO<bool>> SendNotificationToBossFromPMWithCompanyId(string senderEmail, int companyId)
+    {
+        try
+        {
+            var companyFromDb = await _unitOfWork.Company.GetAsync(c => c.Id.Equals(companyId)
+                ) ?? throw new Exception("Company not found!");
+
+            var pmFromDb = await _unitOfWork.User.GetAsync(u => u.Email.Equals(senderEmail)
+                ) ?? throw new Exception("User not found!");
+
+            NotificationCreateDTO notificationCreateDTO = new()
+            {
+                Message = "Notification to BOSS from PM",
+                SenderId = pmFromDb.Id,
+                RecipientId = companyFromDb.OwnerId,
+                Type = NotificationType.PMRegistrationRequest
+            };
+
+            await CreateNotificationAsync(notificationCreateDTO);
+
+            return new ResponseDTO<bool>(true);
+        }
+        catch (Exception ex)
+        {
+            return new ResponseDTO<bool>(ex.Message);
+        }
+    }
+
     public async Task<ResponseDTO<NotificationDTO>> CreateNotificationAsync(NotificationCreateDTO notificationCreateDTO)
     {
         try

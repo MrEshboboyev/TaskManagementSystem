@@ -9,6 +9,7 @@ using TaskManagementSystem.UI.ViewModels;
 using TaskManagementSystem.UI.Services.IServices;
 using Microsoft.AspNetCore.Identity;
 using TaskManagementSystem.Domain.Entities;
+using TaskManagementSystem.Application.DTOs.Notification;
 
 namespace TaskManagementSystem.UI.Controllers
 {
@@ -16,13 +17,15 @@ namespace TaskManagementSystem.UI.Controllers
         IUserService userService,
         IAuthService authService,
         ITokenProvider tokenProvider,
-        SignInManager<ApplicationUser> signInManager) : Controller
+        SignInManager<ApplicationUser> signInManager,
+        INotificationService notificationService) : Controller
     {
         private readonly ICompanyService _companyService = companyService;
         private readonly IUserService _userService = userService;
         private readonly IAuthService _authService = authService;
         private readonly ITokenProvider _tokenProvider = tokenProvider;
         private readonly SignInManager<ApplicationUser> _signInManager = signInManager;
+        private readonly INotificationService _notificationService = notificationService;
 
         [HttpGet]
         public async Task<IActionResult> Register()
@@ -66,6 +69,7 @@ namespace TaskManagementSystem.UI.Controllers
             if (result.Success)
             {
                 TempData["success"] = result.Message;
+                await _notificationService.SendNotificationToBossFromPMWithCompanyId(model.Email, model.SelectedCompanyId);
                 return RedirectToAction(nameof(Login));
             }
 

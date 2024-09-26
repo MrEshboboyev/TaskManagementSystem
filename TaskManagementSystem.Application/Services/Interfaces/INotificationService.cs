@@ -5,7 +5,10 @@ namespace TaskManagementSystem.Application.Services.Interfaces;
 
 public interface INotificationService
 {
-    // Send a notification to a user
+    // Send a notification to Boss from PM
+    Task<ResponseDTO<bool>> SendNotificationToBossFromPMWithCompanyId(string senderEmail, int companyId);    
+
+    // create notification
     Task<ResponseDTO<NotificationDTO>> CreateNotificationAsync(NotificationCreateDTO notificationDto);
 
     // Mark a notification as read
