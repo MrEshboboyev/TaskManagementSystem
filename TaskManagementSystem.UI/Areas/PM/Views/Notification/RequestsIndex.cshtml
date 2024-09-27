@@ -33,6 +33,7 @@
 					<th>
 						Sender Name
 					</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -59,6 +60,14 @@
 						</td>
 						<td>
 							@item.SenderName
+						</td>
+						<td>
+							<a asp-action="Details" asp-route-notificationId="@item.Id" class="btn btn-success">
+								<i class="bi bi-arrow-right-circle-fill"></i>
+							</a>
+							<a asp-action="Delete" asp-route-notificationId="@item.Id" class="btn btn-danger">
+								<i class="bi bi-trash"></i>
+							</a>
 						</td>
 					</tr>
 				}

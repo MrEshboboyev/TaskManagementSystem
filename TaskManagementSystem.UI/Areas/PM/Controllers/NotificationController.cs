@@ -22,5 +22,11 @@ namespace TaskManagementSystem.UI.Areas.PM.Controllers
             var requestNotifications = await _notificationService.GetRequestNotificationsForUserAsync(GetUserId());
             return View(requestNotifications.Data);
         }
+        
+        public async Task<IActionResult> Details(int notificationId)
+        {
+            var requestNotification = await _notificationService.GetNotificationDetailsAsync(notificationId);
+            return View(requestNotification.Data);
+        }
     }
 }
