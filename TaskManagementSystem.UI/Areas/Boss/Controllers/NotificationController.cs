@@ -1,14 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Runtime.CompilerServices;
 using System.Security.Claims;
+using TaskManagementSystem.Application.Common.Utility;
 using TaskManagementSystem.Application.DTOs.Notification;
 using TaskManagementSystem.Application.Services.Interfaces;
 using TaskManagementSystem.Domain.Enums;
 
-namespace TaskManagementSystem.UI.Controllers
+namespace TaskManagementSystem.UI.Areas.Boss.Controllers
 {
-    [Authorize]
+    [Area(SD.Role_Boss)]
+    [Authorize(Roles = SD.Role_Boss)]
     public class NotificationController(INotificationService notificationService) : Controller
     {
         private readonly INotificationService _notificationService = notificationService;
