@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using TaskManagementSystem.Application.Common.Utility;
+using TaskManagementSystem.Application.DTOs.Notification;
 using TaskManagementSystem.Application.Services.Interfaces;
 
 namespace TaskManagementSystem.UI.Areas.PM.Controllers
@@ -27,6 +28,28 @@ namespace TaskManagementSystem.UI.Areas.PM.Controllers
         {
             var requestNotification = await _notificationService.GetNotificationDetailsAsync(notificationId);
             return View(requestNotification.Data);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int notificationId)
+        {
+            var notification = await _notificationService.GetNotificationDetailsAsync(notificationId);
+            return View(notification.Data);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeletePOST(int notificationId)
+        {
+            var result = await _notificationService.DeleteNotificationAsync(notificationId);
+
+            if (result.Success) 
+            {
+                TempData["success"] = "Notification Successfully Deleted!";
+                return RedirectToAction(nameof(RequestsIndex));
+            }
+
+            TempData["error"] = $"Failed to delete notification response. Error: {result.Message}";
+            return RedirectToAction(nameof(Delete), new { notificationId });
         }
     }
 }
