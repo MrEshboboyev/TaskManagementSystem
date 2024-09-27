@@ -4,14 +4,18 @@ using System.Security.Claims;
 using TaskManagementSystem.Application.Common.Utility;
 using TaskManagementSystem.Application.DTOs.Notification;
 using TaskManagementSystem.Application.Services.Interfaces;
+using TaskManagementSystem.Domain.Enums;
+using TaskManagementSystem.UI.Areas.PM.ViewModels;
 
 namespace TaskManagementSystem.UI.Areas.PM.Controllers
 {
     [Area(SD.Role_PM)]
     [Authorize(Roles = SD.Role_PM)]
-    public class NotificationController(INotificationService notificationService) : Controller
+    public class NotificationController(INotificationService notificationService,
+        ICompanyService companyService) : Controller
     {
         private readonly INotificationService _notificationService = notificationService;
+        private readonly ICompanyService _companyService = companyService;
 
         #region Private Methods
         private string GetUserId() => User.FindFirstValue(ClaimTypes.NameIdentifier)
@@ -50,6 +54,43 @@ namespace TaskManagementSystem.UI.Areas.PM.Controllers
 
             TempData["error"] = $"Failed to delete notification response. Error: {result.Message}";
             return RedirectToAction(nameof(Delete), new { notificationId });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Create() 
+        {
+            var companies = await _companyService.GetAllCompaniesAsync();
+
+            NotificationCreateViewModel model = new()
+            {
+                Companies = companies.Data
+            };
+
+            return View(model); 
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(NotificationCreateViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            // Get the current PM's Email 
+            var pmEmail = User.FindFirstValue(ClaimTypes.Email);
+
+            // Fetch the company based on SelectedCompanyId
+            var result = await _notificationService.SendNotificationToBossFromPMWithCompanyId(pmEmail, model.SelectedCompanyId);
+
+            if (result.Success)
+            {
+                TempData["success"] = "Notification successfully sent!";
+                return RedirectToAction(nameof(RequestsIndex));
+            }
+
+            TempData["error"] = $"Failed to sending notification process. Error : {result.Message}";
+            return View(model);
         }
     }
 }
