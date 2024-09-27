@@ -9,7 +9,6 @@ using TaskManagementSystem.UI.ViewModels;
 using TaskManagementSystem.UI.Services.IServices;
 using Microsoft.AspNetCore.Identity;
 using TaskManagementSystem.Domain.Entities;
-using TaskManagementSystem.Application.DTOs.Notification;
 
 namespace TaskManagementSystem.UI.Controllers
 {
