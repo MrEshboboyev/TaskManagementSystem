@@ -131,6 +131,24 @@ public class NotificationService(IUnitOfWork unitOfWork, IMapper mapper) : INoti
         }
     }
 
+    public async Task<ResponseDTO<IEnumerable<NotificationDTO>>> GetRequestNotificationsForUserAsync(string userId)
+    {
+        try
+        {
+            var requestNotifications = await _unitOfWork.Notification.GetAllAsync(
+                filter: n => n.SenderId.Equals(userId),
+                includeProperties: "Sender,Recipient");
+
+            var mappedNotifications = _mapper.Map<IEnumerable<NotificationDTO>>(requestNotifications);  
+
+            return new ResponseDTO<IEnumerable<NotificationDTO>>(mappedNotifications);
+        }
+        catch (Exception ex)
+        {
+            return new ResponseDTO<IEnumerable<NotificationDTO>>(ex.Message);
+        }
+    }
+
     public async Task<ResponseDTO<NotificationDTO>> GetNotificationDetailsAsync(int notificationId)
     {
         try

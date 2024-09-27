@@ -17,6 +17,9 @@ public interface INotificationService
     // Marks all notifications as read
     Task<ResponseDTO<bool>> MarkAllAsReadAsync(string userId);
 
+    // Get Request Notifications by user
+    Task<ResponseDTO<IEnumerable<NotificationDTO>>> GetRequestNotificationsForUserAsync(string userId);
+
     // Get all notifications for a specific user
     Task<ResponseDTO<IEnumerable<NotificationDTO>>> GetNotificationsForUserAsync(string userId);
 

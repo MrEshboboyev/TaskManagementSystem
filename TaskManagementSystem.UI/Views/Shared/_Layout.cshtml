@@ -40,6 +40,27 @@
                                     </ul>
                                 </li>
                             }
+
+                            @if (User.IsInRole(SD.Role_PM))
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Management
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a class="dropdown-item" asp-area="@SD.Role_PM" asp-controller="Company" asp-action="CompanyIndex">My Company</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="dropdown-item" asp-area="@SD.Role_PM" asp-controller="Notification" asp-action="RequestsIndex">My Request Notifications</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="dropdown-item" asp-area="@SD.Role_PM" asp-controller="Notification" asp-action="RequestsIndex">Employee Notifications</a>
+                                        </li>
+                                        <li><hr class="dropdown-divider"></li>
+                                    </ul>
+                                </li>
+                            }
                         }
                     </ul>
                     <partial name="_LoginPartial" />
