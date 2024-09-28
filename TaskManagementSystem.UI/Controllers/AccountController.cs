@@ -68,7 +68,6 @@ namespace TaskManagementSystem.UI.Controllers
             if (result.Success)
             {
                 TempData["success"] = result.Message;
-                await _notificationService.SendNotificationToBossFromPMWithCompanyId(model.Email, model.SelectedCompanyId);
                 return RedirectToAction(nameof(Login));
             }
 

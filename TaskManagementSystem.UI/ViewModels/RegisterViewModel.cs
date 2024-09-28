@@ -33,7 +33,7 @@ namespace TaskManagementSystem.UI.ViewModels
         public IEnumerable<UserDTO>? PMs { get; set; }
 
         // selected companyId and PMid
-        public int SelectedCompanyId { get; set; }
+        public int? SelectedCompanyId { get; set; }
         public int? SelectedPMId { get; set; }
     }
 }

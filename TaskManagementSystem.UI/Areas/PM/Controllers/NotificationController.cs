@@ -74,7 +74,7 @@ namespace TaskManagementSystem.UI.Areas.PM.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return RedirectToAction(nameof(Create));
             }
 
             // Get the current PM's Email 
